@@ -118,30 +118,107 @@
             border-color: var(--primary-dark);
         }
         
-        /* Hero Section */
-        .hero {
+        /* Page Header */
+        .page-header {
             background: linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(29, 78, 216, 0.85)), 
-                        url('/api/placeholder/1200/600') center/cover no-repeat;
+                        url('/api/placeholder/1200/300') center/cover no-repeat;
             color: white;
-            padding: 150px 0 100px;
+            padding: 120px 0 50px;
             text-align: center;
             margin-top: 70px;
         }
         
-        .hero h2 {
-            font-size: 3rem;
-            margin-bottom: 20px;
+        .page-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
             font-weight: 700;
         }
         
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 30px;
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.8);
         }
         
-        /* Features Section */
-        .features {
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* About Section */
+        .about-section {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about-content h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .about-content p {
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Mission & Vision */
+        .mission-vision {
+            padding: 80px 0;
+            background-color: #f8fafc;
+        }
+        
+        .mission-vision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        
+        .mission-card, .vision-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 40px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .mission-card:hover, .vision-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-icon {
+            font-size: 50px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .mission-card h3, .vision-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        /* Team Section */
+        .team-section {
             padding: 80px 0;
             background-color: white;
         }
@@ -153,108 +230,86 @@
             color: var(--dark);
         }
         
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .feature-card {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            padding: 30px;
-            transition: transform 0.3s, box-shadow 0.3s;
+        .section-subtitle {
             text-align: center;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-icon {
-            font-size: 40px;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-        
-        .feature-title {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-        
-        /* Benefits Section */
-        .benefits {
-            padding: 80px 0;
-            background-color: #f8fafc;
-        }
-        
-        .benefits-container {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-        }
-        
-        .benefits-content {
-            flex: 1;
-        }
-        
-        .benefits-content h2 {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-            color: var(--dark);
-        }
-        
-        .benefits-content p {
-            margin-bottom: 30px;
+            max-width: 700px;
+            margin: -30px auto 50px;
             color: var(--secondary);
         }
         
-        .benefits-list {
-            list-style: none;
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
         }
         
-        .benefits-list li {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .benefits-list i {
-            color: var(--success);
-            margin-right: 10px;
-        }
-        
-        .benefits-image {
-            flex: 1;
-        }
-        
-        .benefits-image img {
-            width: 100%;
+        .team-card {
+            background-color: white;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.3s;
         }
         
-        /* Contact CTA */
-        .contact-cta {
+        .team-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .team-image {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .team-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .team-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .team-position {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .team-social a {
+            color: var(--secondary);
+            transition: color 0.3s;
+        }
+        
+        .team-social a:hover {
+            color: var(--primary);
+        }
+        
+        /* CTA Section */
+        .cta-section {
             padding: 80px 0;
             background-color: var(--primary);
             color: white;
             text-align: center;
         }
         
-        .contact-cta h2 {
+        .cta-section h2 {
             font-size: 2.2rem;
             margin-bottom: 20px;
         }
         
-        .contact-cta p {
-            margin-bottom: 30px;
+        .cta-section p {
             max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto 30px;
         }
         
         .btn-white {
@@ -342,12 +397,9 @@
         
         /* Responsive */
         @media (max-width: 992px) {
-            .benefits-container {
-                flex-direction: column;
-            }
-            
-            .benefits-image {
-                order: -1;
+            .about-grid,
+            .mission-vision-grid {
+                grid-template-columns: 1fr;
             }
             
             nav {
@@ -360,15 +412,15 @@
         }
         
         @media (max-width: 768px) {
-            .hero h2 {
-                font-size: 2.2rem;
+            .page-header h2 {
+                font-size: 2rem;
             }
             
             .section-title {
                 font-size: 1.8rem;
             }
             
-            .benefits-content h2 {
+            .about-content h3 {
                 font-size: 1.8rem;
             }
             
