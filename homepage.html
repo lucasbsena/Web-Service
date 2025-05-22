@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestão de Estoque</title>
+    <link rel="stylesheet" href="/Web-Service/assets/homepage.css">
+     <script src="scripts/homepage.js"></script>
+</head>
+<body>
+     <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <i class="fas fa-box-open"></i>
+                    <h1>Armazém Conectado</h1>
+                </a>
+                
+               <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showSection('products')">Produtos</button>
+            <button class="nav-tab" onclick="showSection('inventory')">Estoque</button>
+            <button class="nav-tab" onclick="showSection('sales')">Vendas</button>
+            <button class="nav-tab" onclick="showSection('movements')">Movimentações</button>
+            <button class="nav-tab" onclick="showSection('suppliers')">Fornecedores</button>
+            <button class="nav-tab" onclick="showSection('reports')">Relatórios</button>
+        </div>
+                 <div class="auth-buttons">
+                   <a href="index.html" class="btn btn-outline">Sair</a>
+                </div>
+                </div>
+       
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalProducts">150</div>
+                <div class="stat-label">Total de Produtos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="lowStockItems">12</div>
+                <div class="stat-label">Estoque Baixo</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalValue">R$ 45.320</div>
+                <div class="stat-label">Valor Total</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="todayMovements">28</div>
+                <div class="stat-label">Movimentações Hoje</div>
+            </div>
+        </div>
+
+        
+        <div id="products" class="section active">
+            <h2>Gerenciamento de Produtos</h2>
+            
+            <div class="form-group">
+                <button class="btn btn-primary" onclick="showAddProductModal()">➕ Novo Produto</button>
+            </div>
+
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Buscar produtos..." onkeyup="searchProducts()">
+            </div>
+
+            <div class="table-container">
+                <table id="productsTable">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>Categoria</th>
+                            <th>Preço</th>
+                            <th>Estoque</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PRD001</td>
+                            <td>Notebook Dell Inspiron</td>
+                            <td>Eletrônicos</td>
+                            <td>R$ 2.499,00</td>
+                            <td>15</td>
+                            <td><span class="status-badge status-active">Ativo</span></td>
+                            <td>
+                                <button class="btn btn-success" onclick="editProduct(1)">✏️</button>
+                                <button class="btn btn-danger" onclick="deleteProduct(1)">🗑️</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PRD002</td>
+                            <td>Mouse Logitech MX</td>
+                            <td>Periféricos</td>
+                            <td>R$ 129,90</td>
+                            <td>3</td>
+                            <td><span class="status-badge status-low">Estoque Baixo</span></td>
+                            <td>
+                                <button class="btn btn-success" onclick="editProduct(2)">✏️</button>
+                                <button class="btn btn-danger" onclick="deleteProduct(2)">🗑️</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+     
+        <div id="inventory" class="section">
+            <h2>Controle de Estoque</h2>
+            
+            <div class="alert alert-warning">
+                ⚠️ <strong>12 produtos</strong> estão com estoque abaixo do mínimo recomendado
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-warning" onclick="showAdjustStockModal()">📊 Ajustar Estoque</button>
+                <button class="btn btn-primary" onclick="generateStockReport()">📋 Relatório</button>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Atual</th>
+                            <th>Mínimo</th>
+                            <th>Máximo</th>
+                            <th>Reservado</th>
+                            <th>Disponível</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Notebook Dell Inspiron</td>
+                            <td>15</td>
+                            <td>10</td>
+                            <td>50</td>
+                            <td>2</td>
+                            <td>13</td>
+                            <td><span class="status-badge status-ok">OK</span></td>
+                            <td><button class="btn btn-primary" onclick="adjustStock(1)">Ajustar</button></td>
+                        </tr>
+                        <tr>
+                            <td>Mouse Logitech MX</td>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>20</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td><span class="status-badge status-low">Baixo</span></td>
+                            <td><button class="btn btn-warning" onclick="adjustStock(2)">Ajustar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+       
+        <div id="sales" class="section">
+            <h2>💰 Cadastro de Vendas</h2>
+            
+            <div class="form-group">
+                <button class="btn btn-primary" onclick="showNewSaleModal()">➕ Nova Venda</button>
+                <button class="btn btn-success" onclick="showSalesReport()">📊 Relatório de Vendas</button>
+            </div>
+
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Buscar vendas..." onkeyup="searchSales()">
+            </div>
+
+            <div class="table-container">
+                <table id="salesTable">
+                    <thead>
+                        <tr>
+                            <th>Nº Venda</th>
+                            <th>Data/Hora</th>
+                            <th>Cliente</th>
+                            <th>Produtos</th>
+                            <th>Quantidade Total</th>
+                            <th>Valor Total</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>VND001</td>
+                            <td>21/05/2025 10:30</td>
+                            <td>João Silva</td>
+                            <td>2 itens</td>
+                            <td>3</td>
+                            <td>R$ 2.758,80</td>
+                            <td><span class="status-badge status-active">Concluída</span></td>
+                            <td>
+                                <button class="btn btn-success" onclick="viewSaleDetails(1)">👁️</button>
+                                <button class="btn btn-primary" onclick="printSale(1)">🖨️</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>VND002</td>
+                            <td>21/05/2025 14:15</td>
+                            <td>Maria Santos</td>
+                            <td>1 item</td>
+                            <td>1</td>
+                            <td>R$ 129,90</td>
+                            <td><span class="status-badge status-active">Concluída</span></td>
+                            <td>
+                                <button class="btn btn-success" onclick="viewSaleDetails(2)">👁️</button>
+                                <button class="btn btn-primary" onclick="printSale(2)">🖨️</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div id="movements" class="section">
+            <h2>Movimentações de Estoque</h2>
+            
+            <div class="form-row">
+                <div>
+                    <label>Tipo de Movimentação:</label>
+                    <select>
+                        <option>Todas</option>
+                        <option>Entrada</option>
+                        <option>Saída</option>
+                        <option>Ajuste</option>
+                        <option>Transferência</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Data Inicial:</label>
+                    <input type="date">
+                </div>
+                <div>
+                    <label>Data Final:</label>
+                    <input type="date">
+                </div>
+                <div style="display: flex; align-items: end;">
+                    <button class="btn btn-primary">🔍 Filtrar</button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data/Hora</th>
+                            <th>Produto</th>
+                            <th>Tipo</th>
+                            <th>Quantidade</th>
+                            <th>Usuário</th>
+                            <th>Observações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>20/05/2025 14:30</td>
+                            <td>Notebook Dell Inspiron</td>
+                            <td><span class="status-badge status-active">Entrada</span></td>
+                            <td>+10</td>
+                            <td>João Silva</td>
+                            <td>Compra - Pedido #1234</td>
+                        </tr>
+                        <tr>
+                            <td>20/05/2025 10:15</td>
+                            <td>Mouse Logitech MX</td>
+                            <td><span class="status-badge status-low">Saída</span></td>
+                            <td>-2</td>
+                            <td>Maria Santos</td>
+                            <td>Venda - Pedido #5678</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div id="suppliers" class="section">
+            <h2>Gestão de Fornecedores</h2>
+            
+            <div class="form-group">
+                <button class="btn btn-primary" onclick="showAddSupplierModal()">➕ Novo Fornecedor</button>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CNPJ</th>
+                            <th>Contato</th>
+                            <th>E-mail</th>
+                            <th>Produtos</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tech Solutions Ltda</td>
+                            <td>12.345.678/0001-90</td>
+                            <td>(11) 99999-8888</td>
+                            <td>contato@techsolutions.com</td>
+                            <td>25</td>
+                            <td>
+                                <button class="btn btn-success" onclick="editSupplier(1)">✏️</button>
+                                <button class="btn btn-primary" onclick="viewSupplierProducts(1)">📦</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div id="reports" class="section">
+            <h2>Relatórios e Análises</h2>
+            
+            <div class="form-row">
+                <div>
+                    <label>Tipo de Relatório:</label>
+                    <select id="reportType">
+                        <option>Estoque Atual</option>
+                        <option>Produtos em Falta</option>
+                        <option>Movimentações</option>
+                        <option>Valor do Estoque</option>
+                        <option>Performance de Fornecedores</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Período:</label>
+                    <select>
+                        <option>Últimos 7 dias</option>
+                        <option>Último mês</option>
+                        <option>Últimos 3 meses</option>
+                        <option>Personalizado</option>
+                    </select>
+                </div>
+                <div style="display: flex; align-items: end;">
+                    <button class="btn btn-primary" onclick="generateReport()">📊 Gerar Relatório</button>
+                    <button class="btn btn-success" onclick="exportReport()">📥 Exportar</button>
+                </div>
+            </div>
+            
+            <div id="reportResult" style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px; display: none;">
+                <h3>Resultado do Relatório</h3>
+                <p>O relatório será exibido aqui...</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <h3>Novo Produto</h3>
+            <form id="productForm">
+                <div class="form-row">
+                    <div>
+                        <label>Nome do Produto:</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div>
+                        <label>Código/SKU:</label>
+                        <input type="text" id="productSKU" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label>Categoria:</label>
+                        <select id="productCategory">
+                            <option>Eletrônicos</option>
+                            <option>Periféricos</option>
+                            <option>Acessórios</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Preço de Venda:</label>
+                        <input type="number" step="0.01" id="productPrice">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label>Estoque Mínimo:</label>
+                        <input type="number" id="minStock">
+                    </div>
+                    <div>
+                        <label>Estoque Máximo:</label>
+                        <input type="number" id="maxStock">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Descrição:</label>
+                    <textarea id="productDescription" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">💾 Salvar</button>
+                    <button type="button" class="btn" onclick="closeModal('productModal')">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+ 
+    <div id="saleModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <h3>🛒 Nova Venda</h3>
+            <form id="saleForm">
+           
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h4 style="margin-bottom: 15px; color: #495057;">👤 Dados do Cliente</h4>
+                    <div class="form-row">
+                        <div>
+                            <label>Nome do Cliente:</label>
+                            <input type="text" id="customerName" required>
+                        </div>
+                        <div>
+                            <label>CPF/CNPJ:</label>
+                            <input type="text" id="customerDocument">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div>
+                            <label>Telefone:</label>
+                            <input type="tel" id="customerPhone">
+                        </div>
+                        <div>
+                            <label>E-mail:</label>
+                            <input type="email" id="customerEmail">
+                        </div>
+                    </div>
+                </div>
+
+            
+                <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h4 style="margin-bottom: 15px; color: #495057;">🛍️ Produtos</h4>
+                    <div class="form-row">
+                        <div>
+                            <label>Selecionar Produto:</label>
+                            <select id="productSelect">
+                                <option value="">Escolha um produto...</option>
+                                <option value="PRD001" data-name="Notebook Dell Inspiron" data-price="2499.00" data-stock="15">PRD001 - Notebook Dell Inspiron (R$ 2.499,00)</option>
+                                <option value="PRD002" data-name="Mouse Logitech MX" data-price="129.90" data-stock="3">PRD002 - Mouse Logitech MX (R$ 129,90)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Quantidade:</label>
+                            <input type="number" id="productQuantity" min="1" value="1">
+                        </div>
+                        <div style="display: flex; align-items: end;">
+                            <button type="button" class="btn btn-success" onclick="addProductToSale()">➕ Adicionar</button>
+                        </div>
+                    </div>
+                    
+                   
+                    <div id="saleProducts" style="margin-top: 20px;">
+                        <table style="width: 100%; background: white; border-radius: 5px;">
+                            <thead>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Preço Unit.</th>
+                                    <th>Qtd</th>
+                                    <th>Subtotal</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="saleProductsList">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+              
+                <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h4 style="margin-bottom: 15px; color: #495057;">💰 Resumo da Venda</h4>
+                    <div class="form-row">
+                        <div>
+                            <label>Subtotal:</label>
+                            <input type="text" id="saleSubtotal" readonly value="R$ 0,00">
+                        </div>
+                        <div>
+                            <label>Desconto (%):</label>
+                            <input type="number" id="saleDiscount" min="0" max="100" step="0.01" value="0" onchange="calculateSaleTotal()">
+                        </div>
+                        <div>
+                            <label>Total Final:</label>
+                            <input type="text" id="saleTotal" readonly value="R$ 0,00" style="font-weight: bold; font-size: 16px;">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div>
+                            <label>Forma de Pagamento:</label>
+                            <select id="paymentMethod" required>
+                                <option value="">Selecione...</option>
+                                <option value="dinheiro">💵 Dinheiro</option>
+                                <option value="cartao_debito">💳 Cartão de Débito</option>
+                                <option value="cartao_credito">💳 Cartão de Crédito</option>
+                                <option value="pix">📱 PIX</option>
+                                <option value="boleto">🧾 Boleto</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Parcelas:</label>
+                            <select id="installments">
+                                <option value="1">À vista</option>
+                                <option value="2">2x</option>
+                                <option value="3">3x</option>
+                                <option value="6">6x</option>
+                                <option value="12">12x</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                
+        
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">💾 Finalizar Venda</button>
+                    <button type="button" class="btn btn-success" onclick="saveDraft()">📝 Salvar Rascunho</button>
+                    <button type="button" class="btn" onclick="closeModal('saleModal')">❌ Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+</body>
+</html>
