@@ -1,22 +1,22 @@
 
-        // Função para alternar between seções
-        function showSection(sectionId) {
-            // Esconder todas as seções
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
+        // // Função para alternar between seções
+        // function showSection(sectionId) {
+        //     // Esconder todas as seções
+        //     document.querySelectorAll('.section').forEach(section => {
+        //         section.classList.remove('active');
+        //     });
             
-            // Remover classe active de todas as tabs
-            document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
+        //     // Remover classe active de todas as tabs
+        //     document.querySelectorAll('.nav-tab').forEach(tab => {
+        //         tab.classList.remove('active');
+        //     });
             
-            // Mostrar seção selecionada
-            document.getElementById(sectionId).classList.add('active');
+        //     // Mostrar seção selecionada
+        //     document.getElementById(sectionId).classList.add('active');
             
-            // Adicionar classe active à tab clicada
-            event.target.classList.add('active');
-        }
+        //     // Adicionar classe active à tab clicada
+        //     event.target.classList.add('active');
+        // }
 
         //  // Função de busca de produtos
         // function searchProducts() {
